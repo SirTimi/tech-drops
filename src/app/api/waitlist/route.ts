@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
 
 export async function POST(req: Request) {
   try {
@@ -11,11 +12,31 @@ export async function POST(req: Request) {
       )
     }
 
-    // TODO: plug into real storage (Postgres, Airtable, Notion, etc).
-    // For now we just log it so we can see it in server logs.
-    console.log('New waitlist signup:', { name, email, role })
+    const trimmedEmail = email.trim().toLowerCase()
+    const trimmedName = typeof name === 'string' ? name.trim() : null
+    const trimmedRole = typeof role === 'string' ? role.trim() : null
 
-    return NextResponse.json({ ok: true })
+    // Basic duplicate protection
+    const existing = await prisma.waitlistSignup.findUnique({
+      where: { email: trimmedEmail },
+    })
+
+    if (existing) {
+      return NextResponse.json(
+        { ok: true, message: 'Already on the waitlist' },
+        { status: 200 },
+      )
+    }
+
+    await prisma.waitlistSignup.create({
+      data: {
+        email: trimmedEmail,
+        name: trimmedName || null,
+        role: trimmedRole || null,
+      },
+    })
+
+    return NextResponse.json({ ok: true }, { status: 200 })
   } catch (err) {
     console.error('Waitlist error', err)
     return NextResponse.json(
