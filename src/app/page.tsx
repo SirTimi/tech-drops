@@ -1,65 +1,230 @@
-import Image from "next/image";
+import { WaitlistForm } from '@/components/waitlist-form'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-black text-zinc-100">
+      {/* Glow background */}
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-amber-500/10 via-black to-black" />
+
+      {/* Navbar */}
+      <header className="border-b border-zinc-900/80 bg-black/60 backdrop-blur">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-400 text-xs font-bold text-black">
+              TD
+            </div>
+            <span className="text-sm font-semibold tracking-wide">
+              Tech Drops
+            </span>
+          </div>
+
+          <nav className="hidden items-center gap-6 text-xs text-zinc-400 md:flex">
+            <a href="#how-it-works" className="hover:text-amber-300">
+              How it works
+            </a>
+            <a href="#sample-drop" className="hover:text-amber-300">
+              Sample drop
+            </a>
+            <a href="#faq" className="hover:text-amber-300">
+              FAQ
+            </a>
+            <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-[11px] font-medium text-amber-300">
+              Pre-launch waitlist open
+            </span>
+          </nav>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="border-b border-zinc-900/60">
+        <div className="mx-auto flex max-w-5xl flex-col gap-10 px-4 py-14 md:flex-row md:items-center md:py-20">
+          <div className="flex-1">
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-[11px] text-amber-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              Daily tech signal for builders
+            </div>
+
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-50 md:text-4xl lg:text-5xl">
+              One high-signal tech drop,
+              <span className="block text-amber-300">every morning.</span>
+            </h1>
+
+            <p className="mt-4 max-w-xl text-sm text-zinc-400 md:text-base">
+              Tech Drops scans the noise, picks one thing that actually matters
+              in tech, AI or software, and delivers a short breakdown with
+              clear action steps. Built for devs, founders and product people
+              who want to stay sharp without doomscrolling.
+            </p>
+
+            <WaitlistForm />
+
+            <div className="mt-4 flex flex-wrap gap-3 text-xs text-zinc-500">
+              <span>• 5 minute read</span>
+              <span>• Tailored to your interests and level</span>
+              <span>• Delivered once per day at 8am</span>
+            </div>
+          </div>
+
+          {/* Right side: sample card preview */}
+          <div className="flex-1">
+            <div className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-5 shadow-xl shadow-amber-500/10">
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-amber-400">
+                Sample Tech Drop
+              </p>
+              <h2 className="mt-3 text-lg font-semibold text-zinc-50">
+                Why everyone is talking about vector databases again
+              </h2>
+              <p className="mt-2 text-xs text-zinc-400">
+                Vector databases store information as embeddings. This lets you
+                build search and recommendation systems that understand meaning
+                instead of exact keywords. With the latest wave of AI tools,
+                they are quietly becoming part of the default stack.
+              </p>
+              <ul className="mt-3 space-y-2 text-xs text-zinc-400">
+                <li>
+                  <span className="font-medium text-zinc-200">
+                    How it works:
+                  </span>{' '}
+                  Text is converted into high-dimensional vectors and stored in
+                  a database that can perform fast similarity search.
+                </li>
+                <li>
+                  <span className="font-medium text-zinc-200">
+                    Why it matters:
+                  </span>{' '}
+                  Better search, personalization and AI features in your app
+                  without rewriting everything.
+                </li>
+                <li>
+                  <span className="font-medium text-zinc-200">
+                    Action step:
+                  </span>{' '}
+                  If you are a dev, pick one provider (like pgvector on
+                  Postgres) and ship a small feature using it.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section
+        id="how-it-works"
+        className="border-b border-zinc-900/60 bg-zinc-950/40"
+      >
+        <div className="mx-auto max-w-5xl px-4 py-12 md:py-16">
+          <h2 className="text-xl font-semibold text-zinc-50 md:text-2xl">
+            How Tech Drops works
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-zinc-400">
+            Behind the scenes, Tech Drops monitors trusted sources, filters
+            them through AI and sends you one focused breakdown per day.
           </p>
+
+          <div className="mt-6 grid gap-5 md:grid-cols-3">
+            <div className="rounded-2xl border border-zinc-800 bg-black/60 p-4">
+              <p className="text-xs font-medium text-amber-400">1. Scan</p>
+              <h3 className="mt-2 text-sm font-semibold text-zinc-100">
+                Track what actually moves the needle
+              </h3>
+              <p className="mt-2 text-xs text-zinc-400">
+                We watch places like Hacker News, GitHub Trending and curated
+                blogs so you do not have to live on X all day.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-zinc-800 bg-black/60 p-4">
+              <p className="text-xs font-medium text-amber-400">2. Distill</p>
+              <h3 className="mt-2 text-sm font-semibold text-zinc-100">
+                AI-assisted breakdowns, human-tuned
+              </h3>
+              <p className="mt-2 text-xs text-zinc-400">
+                We use AI to summarise and structure the signal, then apply
+                constraints so each drop is clear, concrete and under 5
+                minutes to read.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-zinc-800 bg-black/60 p-4">
+              <p className="text-xs font-medium text-amber-400">3. Deliver</p>
+              <h3 className="mt-2 text-sm font-semibold text-zinc-100">
+                One email at 8am in your timezone
+              </h3>
+              <p className="mt-2 text-xs text-zinc-400">
+                You get one drop per day plus a simple dashboard where you can
+                revisit past drops, search and bookmark what matters.
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="border-b border-zinc-900/60">
+        <div className="mx-auto max-w-5xl px-4 py-12 md:py-16">
+          <h2 className="text-xl font-semibold text-zinc-50 md:text-2xl">
+            FAQ
+          </h2>
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <div>
+              <h3 className="text-sm font-semibold text-zinc-100">
+                How many emails will I get?
+              </h3>
+              <p className="mt-2 text-xs text-zinc-400">
+                One per day on weekdays at 8am in your timezone. No spam, no
+                random promotions.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-zinc-100">
+                Who is Tech Drops for?
+              </h3>
+              <p className="mt-2 text-xs text-zinc-400">
+                Builders. Developers, founders, product and design people who
+                care about tech, AI and software but do not want to scroll
+                timelines all day.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-zinc-100">
+                Is it free?
+              </h3>
+              <p className="mt-2 text-xs text-zinc-400">
+                During the early beta, yes. Later there might be a paid tier
+                for deeper dives and team features. You will always be able to
+                stay on a free version.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-zinc-100">
+                When are you launching?
+              </h3>
+              <p className="mt-2 text-xs text-zinc-400">
+                We are currently building the MVP and onboarding a small
+                waitlist of early users first. Join the list above and we will
+                keep you in the loop.
+              </p>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
-  );
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-900/80 bg-black/80">
+        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 px-4 py-6 text-xs text-zinc-500 md:flex-row">
+          <p>© {new Date().getFullYear()} Tech Drops. All rights reserved.</p>
+          <div className="flex gap-4">
+            <a href="#" className="hover:text-amber-300">
+              X (Twitter)
+            </a>
+            <a href="#" className="hover:text-amber-300">
+              LinkedIn
+            </a>
+            <a href="#" className="hover:text-amber-300">
+              Contact
+            </a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  )
 }
