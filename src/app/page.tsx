@@ -14,8 +14,8 @@ export default function HomePage() {
             <Image
               src="/tech-drops-logo.png"
               alt="Tech Drops logo"
-              width={32}
-              height={32}
+              width={50}
+              height={50}
               className="rounded-lg"
               priority
             />
