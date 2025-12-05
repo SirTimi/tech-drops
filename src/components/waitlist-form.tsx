@@ -14,11 +14,17 @@ export function WaitlistForm() {
     setError(null)
 
     const formData = new FormData(e.currentTarget)
+
     const payload = {
       name: formData.get('name')?.toString().trim() || '',
       email: formData.get('email')?.toString().trim() || '',
       role: formData.get('role')?.toString().trim() || '',
+      interests: formData.get('interests')?.toString().trim() || '',
+      experienceLevel:
+        formData.get('experienceLevel')?.toString().trim() || '',
     }
+
+    console.log('Submitting waitlist payload:', payload)
 
     if (!payload.email) {
       setStatus('error')
@@ -33,15 +39,18 @@ export function WaitlistForm() {
         body: JSON.stringify(payload),
       })
 
+      const data = await res.json().catch(() => null)
+
       if (!res.ok) {
-        throw new Error('Failed to join waitlist')
+        throw new Error(data?.message || 'Failed to join waitlist')
       }
 
       setStatus('success')
       ;(e.target as HTMLFormElement).reset()
-    } catch (err) {
+    } catch (err: any) {
+      console.error('Waitlist submit error:', err)
       setStatus('error')
-      setError('Something went wrong. Please try again.')
+      setError(err?.message || 'Something went wrong. Please try again.')
     }
   }
 
@@ -78,17 +87,35 @@ export function WaitlistForm() {
           <option value="founder">Founder</option>
           <option value="designer">Designer</option>
           <option value="product">Product person</option>
+          <option value="student">Student</option>
           <option value="other">Other</option>
         </select>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="flex-1 rounded-xl bg-amber-400 px-4 py-2 text-sm font-medium text-black shadow-lg shadow-amber-500/30 transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-70"
+        <select
+          name="experienceLevel"
+          className="flex-1 rounded-xl border border-zinc-800 bg-black/60 px-4 py-2 text-sm text-zinc-100 outline-none focus:border-amber-400"
         >
-          {isSubmitting ? 'Joining waitlist…' : 'Join the waitlist'}
-        </button>
+          <option value="">Experience level</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
       </div>
+
+      <textarea
+        name="interests"
+        rows={2}
+        placeholder="What are you most interested in? (e.g. AI, web dev, startups, dev tooling)"
+        className="mt-1 w-full rounded-xl border border-zinc-800 bg-black/60 px-4 py-2 text-sm text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-amber-400"
+      />
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="mt-1 w-full rounded-xl bg-amber-400 px-4 py-2 text-sm font-medium text-black shadow-lg shadow-amber-500/30 transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-70"
+      >
+        {isSubmitting ? 'Joining waitlist…' : 'Join the waitlist'}
+      </button>
 
       <p className="text-xs text-zinc-500">
         No spam. One curated tech drop per day when we go live.

@@ -14,9 +14,11 @@ datasource db {
 }
 
 model WaitlistSignup {
-  id        String   @id @default(cuid())
-  name      String?  // optional
-  email     String   @unique
-  role      String?  // dev, founder, etc.
-  createdAt DateTime @default(now())
+  id              String   @id @default(cuid())
+  name            String?
+  email           String   @unique
+  role            String?
+  interests       String?
+  experienceLevel String?
+  createdAt       DateTime @default(now())
 }

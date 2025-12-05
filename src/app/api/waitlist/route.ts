@@ -1,9 +1,13 @@
+// src/app/api/waitlist/route.ts
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
 export async function POST(req: Request) {
   try {
-    const { name, email, role } = await req.json()
+    const body = await req.json()
+    console.log('Incoming waitlist body:', body)
+
+    const { name, email, role, interests, experienceLevel } = body
 
     if (!email || typeof email !== 'string') {
       return NextResponse.json(
@@ -13,32 +17,55 @@ export async function POST(req: Request) {
     }
 
     const trimmedEmail = email.trim().toLowerCase()
-    const trimmedName = typeof name === 'string' ? name.trim() : null
-    const trimmedRole = typeof role === 'string' ? role.trim() : null
+    const trimmedName =
+      typeof name === 'string' && name.trim().length > 0 ? name.trim() : null
+    const trimmedRole =
+      typeof role === 'string' && role.trim().length > 0 ? role.trim() : null
+    const trimmedInterests =
+      typeof interests === 'string' && interests.trim().length > 0
+        ? interests.trim()
+        : null
+    const trimmedExperienceLevel =
+      typeof experienceLevel === 'string' &&
+      experienceLevel.trim().length > 0
+        ? experienceLevel.trim()
+        : null
 
-    // Basic duplicate protection
     const existing = await prisma.waitlistSignup.findUnique({
       where: { email: trimmedEmail },
     })
 
     if (existing) {
+      console.log('Existing signup found:', existing.id)
       return NextResponse.json(
         { ok: true, message: 'Already on the waitlist' },
         { status: 200 },
       )
     }
 
-    await prisma.waitlistSignup.create({
+    console.log('Creating new signup with:', {
+      email: trimmedEmail,
+      name: trimmedName,
+      role: trimmedRole,
+      interests: trimmedInterests,
+      experienceLevel: trimmedExperienceLevel,
+    })
+
+    const created = await prisma.waitlistSignup.create({
       data: {
         email: trimmedEmail,
-        name: trimmedName || null,
-        role: trimmedRole || null,
+        name: trimmedName,
+        role: trimmedRole,
+        interests: trimmedInterests,
+        experienceLevel: trimmedExperienceLevel,
       },
     })
 
+    console.log('Created waitlist signup:', created.id)
+
     return NextResponse.json({ ok: true }, { status: 200 })
-  } catch (err) {
-    console.error('Waitlist error', err)
+  } catch (error) {
+    console.error('Waitlist API error:', error)
     return NextResponse.json(
       { ok: false, message: 'Server error' },
       { status: 500 },
