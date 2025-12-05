@@ -41,7 +41,7 @@ export default function HomePage() {
           <div className="flex-1">
             <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-[11px] text-amber-200">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              Daily tech signal for builders
+              Daily tech signal for anyone
             </div>
 
             <h1 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-50 md:text-4xl lg:text-5xl">
@@ -179,8 +179,7 @@ export default function HomePage() {
                 Who is Tech Drops for?
               </h3>
               <p className="mt-2 text-xs text-zinc-400">
-                Builders. Developers, founders, product and design people who
-                care about tech, AI and software but do not want to scroll
+                Anyone who cares about tech, AI, software, etc but does not want to scroll
                 timelines all day.
               </p>
             </div>
@@ -189,9 +188,7 @@ export default function HomePage() {
                 Is it free?
               </h3>
               <p className="mt-2 text-xs text-zinc-400">
-                During the early beta, yes. Later there might be a paid tier
-                for deeper dives and team features. You will always be able to
-                stay on a free version.
+                Yes, It's completely free for everyone
               </p>
             </div>
             <div>
