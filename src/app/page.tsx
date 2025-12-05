@@ -1,4 +1,5 @@
 import { WaitlistForm } from '@/components/waitlist-form'
+import Image from 'next/image';
 
 export default function HomePage() {
   return (
@@ -10,13 +11,19 @@ export default function HomePage() {
       <header className="border-b border-zinc-900/80 bg-black/60 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-400 text-xs font-bold text-black">
-              TD
-            </div>
+            <Image
+              src="/tech-drops-logo.png"
+              alt="Tech Drops logo"
+              width={32}
+              height={32}
+              className="rounded-lg"
+              priority
+            />
             <span className="text-sm font-semibold tracking-wide">
               Tech Drops
             </span>
           </div>
+
 
           <nav className="hidden items-center gap-6 text-xs text-zinc-400 md:flex">
             <a href="#how-it-works" className="hover:text-amber-300">
