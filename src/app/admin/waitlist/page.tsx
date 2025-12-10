@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import { format } from 'date-fns'
 
+export const dynamic = 'force-dynamic'
+
 async function getWaitlist() {
   const entries = await prisma.waitlistSignup.findMany({
     orderBy: { createdAt: 'desc' },
