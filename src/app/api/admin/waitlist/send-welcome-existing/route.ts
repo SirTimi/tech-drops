@@ -5,7 +5,7 @@ import { sendWaitlistWelcomeEmail } from '@/lib/email'
 
 export async function POST(req: Request) {
   const authHeader = req.headers.get('authorization')
-  const expected = `Bearer ${process.env.WAITLIST_ADMIN_TOKEN}`
+  const expected = `Bearer ${process.env.ADMIN_KEY}`
 
   if (!authHeader || authHeader !== expected) {
     return NextResponse.json(
