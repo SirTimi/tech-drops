@@ -21,4 +21,5 @@ model WaitlistSignup {
   interests       String?
   experienceLevel String?
   createdAt       DateTime @default(now())
+  welcomeEmailSentAt DateTime?
 }

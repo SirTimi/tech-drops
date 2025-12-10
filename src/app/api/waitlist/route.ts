@@ -1,6 +1,6 @@
-// src/app/api/waitlist/route.ts
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { sendWaitlistWelcomeEmail } from '@/lib/email'
 
 export async function POST(req: Request) {
   try {
@@ -43,14 +43,7 @@ export async function POST(req: Request) {
       )
     }
 
-    console.log('Creating new signup with:', {
-      email: trimmedEmail,
-      name: trimmedName,
-      role: trimmedRole,
-      interests: trimmedInterests,
-      experienceLevel: trimmedExperienceLevel,
-    })
-
+    console.log('Creating new signup')
     const created = await prisma.waitlistSignup.create({
       data: {
         email: trimmedEmail,
@@ -61,7 +54,16 @@ export async function POST(req: Request) {
       },
     })
 
-    console.log('Created waitlist signup:', created.id)
+    // Fire-and-forget welcome email; log errors without breaking the API
+    try {
+      await sendWaitlistWelcomeEmail(created)
+      await prisma.waitlistSignup.update({
+        where: { id: created.id },
+        data: { welcomeEmailSentAt: new Date() },
+      })
+    } catch (err) {
+      console.error('Failed to send waitlist welcome email:', err)
+    }
 
     return NextResponse.json({ ok: true }, { status: 200 })
   } catch (error) {
