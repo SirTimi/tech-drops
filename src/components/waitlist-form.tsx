@@ -24,8 +24,6 @@ export function WaitlistForm() {
         formData.get('experienceLevel')?.toString().trim() || '',
     }
 
-    console.log('Submitting waitlist payload:', payload)
-
     if (!payload.email) {
       setStatus('error')
       setError('Email is required')
@@ -59,71 +57,149 @@ export function WaitlistForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mt-6 flex w-full max-w-xl flex-col gap-3 rounded-2xl border border-zinc-800 bg-zinc-950/70 p-4 backdrop-blur"
+      className="mt-6 flex w-full max-w-xl flex-col gap-4 rounded-2xl border border-zinc-800 bg-zinc-950/70 p-5 backdrop-blur"
     >
-      <div className="flex flex-col gap-3 md:flex-row">
-        <input
-          name="name"
-          type="text"
-          placeholder="Your name (optional)"
-          className="flex-1 rounded-xl border border-zinc-800 bg-black/60 px-4 py-2 text-sm text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-amber-400"
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Work email"
-          required
-          className="flex-1 rounded-xl border border-zinc-800 bg-black/60 px-4 py-2 text-sm text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-amber-400"
+      {/* Intro text */}
+      <div>
+        <p className="text-xs font-medium text-zinc-200">
+          Join the early access list
+        </p>
+        <p className="mt-1 text-[11px] text-zinc-500">
+          Tell us who you are so we can send drops that actually match your
+          world.
+        </p>
+      </div>
+
+      {/* Name + email */}
+      <div className="grid gap-3 md:grid-cols-2">
+        <div className="flex flex-col gap-1">
+          <label
+            htmlFor="name"
+            className="text-[11px] font-medium text-zinc-300"
+          >
+            Your name
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            className="rounded-xl border border-zinc-800 bg-black/60 px-3 py-2 text-sm text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-amber-400"
+            placeholder="Optional"
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label
+            htmlFor="email"
+            className="text-[11px] font-medium text-zinc-300"
+          >
+            Work email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            className="rounded-xl border border-zinc-800 bg-black/60 px-3 py-2 text-sm text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-amber-400"
+            placeholder="We’ll send your drops here"
+          />
+        </div>
+      </div>
+
+      {/* Role + tech comfort */}
+      <div className="grid gap-3 md:grid-cols-2">
+        <div className="flex flex-col gap-1">
+          <label
+            htmlFor="role"
+            className="text-[11px] font-medium text-zinc-300"
+          >
+            How do you work with tech today?
+          </label>
+          <select
+            id="role"
+            name="role"
+            className="rounded-xl border border-zinc-800 bg-black/60 px-3 py-2 text-xs md:text-sm text-zinc-100 outline-none focus:border-amber-400"
+          >
+            <option value="">Select one</option>
+            <option value="I'm a founder/entrepreneur working with tech teams">
+              I&apos;m a founder/entrepreneur working with tech teams
+            </option>
+            <option value="I'm in product/project management">
+              I&apos;m in product/project management
+            </option>
+            <option value="I work in marketing/sales at a tech company">
+              I work in marketing/sales at a tech company
+            </option>
+            <option value="I manage or work with technical teams">
+              I manage or work with technical teams
+            </option>
+            <option value="I'm just curious and want to understand tech better">
+              I&apos;m just curious and want to understand tech better
+            </option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label
+            htmlFor="experienceLevel"
+            className="text-[11px] font-medium text-zinc-300"
+          >
+            Your tech comfort level
+          </label>
+          <select
+            id="experienceLevel"
+            name="experienceLevel"
+            className="rounded-xl border border-zinc-800 bg-black/60 px-3 py-2 text-xs md:text-sm text-zinc-100 outline-none focus:border-amber-400"
+          >
+            <option value="">Select one</option>
+            <option value="Complete beginner - explain like I'm 5">
+              Complete beginner – explain like I&apos;m 5
+            </option>
+            <option value="I know some basics but get confused often">
+              I know some basics but get confused often
+            </option>
+            <option value="I understand more than most non-tech people">
+              I understand more than most non-tech people
+            </option>
+          </select>
+        </div>
+      </div>
+
+      {/* Interests */}
+      <div className="flex flex-col gap-1">
+        <label
+          htmlFor="interests"
+          className="text-[11px] font-medium text-zinc-300"
+        >
+          What do you most want to understand?
+        </label>
+        <textarea
+          id="interests"
+          name="interests"
+          rows={2}
+          className="w-full rounded-xl border border-zinc-800 bg-black/60 px-3 py-2 text-sm text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-amber-400"
+          placeholder="e.g. APIs, the cloud, AI, how my dev team works, why software takes so long…"
         />
       </div>
 
-      <div className="flex flex-col gap-3 md:flex-row">
-        <select
-          name="role"
-          className="flex-1 rounded-xl border border-zinc-800 bg-black/60 px-4 py-2 text-sm text-zinc-100 outline-none focus:border-amber-400"
-        >
-          <option value="">I am a...</option>
-          <option value="developer">Developer</option>
-          <option value="founder">Founder</option>
-          <option value="designer">Designer</option>
-          <option value="product">Product person</option>
-          <option value="student">Student</option>
-          <option value="other">Other</option>
-        </select>
-
-        <select
-          name="experienceLevel"
-          className="flex-1 rounded-xl border border-zinc-800 bg-black/60 px-4 py-2 text-sm text-zinc-100 outline-none focus:border-amber-400"
-        >
-          <option value="">Experience level</option>
-          <option value="beginner">Beginner</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="advanced">Advanced</option>
-        </select>
-      </div>
-
-      <textarea
-        name="interests"
-        rows={2}
-        placeholder="What are you most interested in? (e.g. AI, web dev, startups, dev tooling)"
-        className="mt-1 w-full rounded-xl border border-zinc-800 bg-black/60 px-4 py-2 text-sm text-zinc-100 outline-none placeholder:text-zinc-500 focus:border-amber-400"
-      />
-
+      {/* Button + status */}
       <button
         type="submit"
         disabled={isSubmitting}
         className="mt-1 w-full rounded-xl bg-amber-400 px-4 py-2 text-sm font-medium text-black shadow-lg shadow-amber-500/30 transition hover:bg-amber-300 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {isSubmitting ? 'Joining waitlist…' : 'Join the waitlist'}
+        {isSubmitting ? 'Saving your spot…' : 'Save my spot'}
       </button>
 
       <p className="text-xs text-zinc-500">
-        No spam. One curated tech drop per day when we go live.
+        Be among the first to get Tech Drops when we launch. No spam, ever.
       </p>
 
       {status === 'success' && (
         <p className="text-xs font-medium text-emerald-400">
-          You’re in. We’ll email you when Tech Drops launches.
+          You&apos;re in. We&apos;ll email you when Tech Drops launches and send
+          your first plain-English drop.
         </p>
       )}
 
